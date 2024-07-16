@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<h1 style="text-align:center">Добро пожаловать!</h1>
+<h2 style="text-align:center">Надеюсь, вы готовы приступить к работе!</h2>
+
+<div style="margin:unset; padding:10px">
+    @model List<BookInfo>
+    <h4>ТОП-3 самых популярных книг</h4>
+    <table class="table">
+        <tr>
+            <th>
+                Название
+            </th>
+            <th>
+                Сколько раз брали
+            </th>
+        </tr>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.TotalCount</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<form method="get" action="@Url.Action("GenerateDocx","Home")" style="text-align: center">
+    @Html.AntiForgeryToken()
+    <input type="submit" value="Сформировать отчет" class="btn btn-primary btn-lg" />
+</form>
+
+<h3 style="text-align:center">Таблицы с данными</h3>
+<div style="background-color:aliceblue; margin:unset; padding:10px; text-align:center">
+    <img src="@Url.Content("~/images/p1.jpg")"><br>
+    @Html.ActionLink("Авторы", "Index", "Authors")
+</div>
+
+<div style="margin:unset; padding:10px; text-align:center">
+    <img src="@Url.Content("~/images/p2.jpeg")"><br>
+    @Html.ActionLink("Произведения", "Index", "List_of_authors")
+</div>
+
+<div style="background-color:aliceblue; margin:unset; padding:10px; text-align:center">
+    <img src="@Url.Content("~/images/p3.jpg")"><br>
+    @Html.ActionLink("Библиотечный каталог", "Index", "Library_catalog")
+</div>
+
+<div style="margin:unset; padding:10px; text-align:center">
+    <img src="@Url.Content("~/images/p4.jpg")"><br>
+    @Html.ActionLink("Реестр экземпляров", "Index", "Register_of_copies")
+</div>
+
+<div style="background-color:aliceblue; margin:unset; padding:10px; text-align:center">
+    <img src="@Url.Content("~/images/p5.jpg")"><br>
+    @Html.ActionLink("Список читателей", "Index", "Registration_list")
+</div>
+
+<div style="margin:unset; padding:10px; text-align:center">
+    <img src="@Url.Content("~/images/p6.jpg")"><br>
+    @Html.ActionLink("Работники", "Index", "Workers")
+</div>
+
+<div style="background-color:aliceblue; margin:unset; padding:10px; text-align:center">
+    <img src="@Url.Content("~/images/p7.jpg")"><br>
+    @Html.ActionLink("Должности", "Index", "Job_titles")
+</div>
+

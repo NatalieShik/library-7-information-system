@@ -1,0 +1,65 @@
+﻿@model WebApplicationLib.Models.Registration_list
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы уверены, что хотете удалить</h3>
+<div>
+    <h4>этого читателя?</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Фамилия
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            Имя
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            Отчество
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patronymic)
+        </dd>
+
+        <dt>
+            Дата выдачи карты
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Card_issue_date)
+        </dd>
+
+        <dt>
+            Дата перерегистрации
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reregistration_date)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к списку", "Index")
+        </div>
+    }
+</div>

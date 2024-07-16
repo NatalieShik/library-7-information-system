@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Authors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Job_titles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Library_catalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Photo" Type="image" />
+          <Property Name="Library_cipher" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Year_of_publication" Type="date" />
+          <Property Name="Place_of_publication" Type="nvarchar(max)" />
+          <Property Name="Publishing_house_name" Type="nvarchar(max)" />
+          <Property Name="Total" Type="int" Nullable="false" />
+          <Property Name="Number_of_available" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="List_of_authors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Library_catalog_Id" Type="int" Nullable="false" />
+          <Property Name="Author_Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Register_of_copies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Issued_to" Type="int" />
+          <Property Name="When_issued" Type="date" />
+          <Property Name="When_must_be_returned" Type="date" />
+          <Property Name="Is_returned" Type="bit" />
+          <Property Name="Last_reader" Type="int" />
+          <Property Name="Fine_paid" Type="bit" />
+          <Property Name="Library_catalog_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Registration_list">
+          <Key>
+            <PropertyRef Name="Library_card_number" />
+          </Key>
+          <Property Name="Library_card_number" Type="int" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Card_issue_date" Type="date" Nullable="false" />
+          <Property Name="Reregistration_date" Type="date" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Job_title_Id" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Enrollment_Job_titles">
+          <End Role="Job_titles" Type="Self.Job_titles" Multiplicity="1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job_titles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="Job_title_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Library_catalog_to_List_of_authors">
+          <End Role="Library_catalog" Type="Self.Library_catalog" Multiplicity="1" />
+          <End Role="List_of_authors" Type="Self.List_of_authors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Library_catalog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="List_of_authors">
+              <PropertyRef Name="Library_catalog_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_List_of_authors_ToAuthors">
+          <End Role="Authors" Type="Self.Authors" Multiplicity="1" />
+          <End Role="List_of_authors" Type="Self.List_of_authors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Authors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="List_of_authors">
+              <PropertyRef Name="Author_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Register_of_copies_Register_catalog">
+          <End Role="Library_catalog" Type="Self.Library_catalog" Multiplicity="1" />
+          <End Role="Register_of_copies" Type="Self.Register_of_copies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Library_catalog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Register_of_copies">
+              <PropertyRef Name="Library_catalog_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Register_of_copies_Registration_list">
+          <End Role="Registration_list" Type="Self.Registration_list" Multiplicity="0..1" />
+          <End Role="Register_of_copies" Type="Self.Register_of_copies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registration_list">
+              <PropertyRef Name="Library_card_number" />
+            </Principal>
+            <Dependent Role="Register_of_copies">
+              <PropertyRef Name="Last_reader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="Authors" EntityType="Self.Authors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job_titles" EntityType="Self.Job_titles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Library_catalog" EntityType="Self.Library_catalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="List_of_authors" EntityType="Self.List_of_authors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Register_of_copies" EntityType="Self.Register_of_copies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registration_list" EntityType="Self.Registration_list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Enrollment_Job_titles" Association="Self.FK_Enrollment_Job_titles">
+            <End Role="Job_titles" EntitySet="Job_titles" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Library_catalog_to_List_of_authors" Association="Self.FK_Library_catalog_to_List_of_authors">
+            <End Role="Library_catalog" EntitySet="Library_catalog" />
+            <End Role="List_of_authors" EntitySet="List_of_authors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_List_of_authors_ToAuthors" Association="Self.FK_List_of_authors_ToAuthors">
+            <End Role="Authors" EntitySet="Authors" />
+            <End Role="List_of_authors" EntitySet="List_of_authors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Register_of_copies_Register_catalog" Association="Self.FK_Register_of_copies_Register_catalog">
+            <End Role="Library_catalog" EntitySet="Library_catalog" />
+            <End Role="Register_of_copies" EntitySet="Register_of_copies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Register_of_copies_Registration_list" Association="Self.FK_Register_of_copies_Registration_list">
+            <End Role="Registration_list" EntitySet="Registration_list" />
+            <End Role="Register_of_copies" EntitySet="Register_of_copies" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Authors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="List_of_authors" Relationship="Self.FK_List_of_authors_ToAuthors" FromRole="Authors" ToRole="List_of_authors" />
+        </EntityType>
+        <EntityType Name="Job_titles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Workers" Relationship="Self.FK_Enrollment_Job_titles" FromRole="Job_titles" ToRole="Workers" />
+        </EntityType>
+        <EntityType Name="Library_catalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Library_cipher" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Year_of_publication" Type="DateTime" Precision="0" />
+          <Property Name="Place_of_publication" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Publishing_house_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Total" Type="Int32" Nullable="false" />
+          <Property Name="Number_of_available" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="List_of_authors" Relationship="Self.FK_Library_catalog_to_List_of_authors" FromRole="Library_catalog" ToRole="List_of_authors" />
+          <NavigationProperty Name="Register_of_copies" Relationship="Self.FK_Register_of_copies_Register_catalog" FromRole="Library_catalog" ToRole="Register_of_copies" />
+        </EntityType>
+        <EntityType Name="List_of_authors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Library_catalog_Id" Type="Int32" Nullable="false" />
+          <Property Name="Author_Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Authors" Relationship="Self.FK_List_of_authors_ToAuthors" FromRole="List_of_authors" ToRole="Authors" />
+          <NavigationProperty Name="Library_catalog" Relationship="Self.FK_Library_catalog_to_List_of_authors" FromRole="List_of_authors" ToRole="Library_catalog" />
+        </EntityType>
+        <EntityType Name="Register_of_copies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Issued_to" Type="Int32" />
+          <Property Name="When_issued" Type="DateTime" Precision="0" />
+          <Property Name="When_must_be_returned" Type="DateTime" Precision="0" />
+          <Property Name="Is_returned" Type="Boolean" />
+          <Property Name="Last_reader" Type="Int32" />
+          <Property Name="Fine_paid" Type="Boolean" />
+          <Property Name="Library_catalog_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Library_catalog" Relationship="Self.FK_Register_of_copies_Register_catalog" FromRole="Register_of_copies" ToRole="Library_catalog" />
+          <NavigationProperty Name="Registration_list" Relationship="Self.FK_Register_of_copies_Registration_list" FromRole="Register_of_copies" ToRole="Registration_list" />
+        </EntityType>
+        <EntityType Name="Registration_list">
+          <Key>
+            <PropertyRef Name="Library_card_number" />
+          </Key>
+          <Property Name="Library_card_number" Type="Int32" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Card_issue_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Reregistration_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Register_of_copies" Relationship="Self.FK_Register_of_copies_Registration_list" FromRole="Registration_list" ToRole="Register_of_copies" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Job_title_Id" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Job_titles" Relationship="Self.FK_Enrollment_Job_titles" FromRole="Workers" ToRole="Job_titles" />
+        </EntityType>
+        <Association Name="FK_List_of_authors_ToAuthors">
+          <End Role="Authors" Type="Self.Authors" Multiplicity="1" />
+          <End Role="List_of_authors" Type="Self.List_of_authors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Authors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="List_of_authors">
+              <PropertyRef Name="Author_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollment_Job_titles">
+          <End Role="Job_titles" Type="Self.Job_titles" Multiplicity="1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job_titles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="Job_title_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Library_catalog_to_List_of_authors">
+          <End Role="Library_catalog" Type="Self.Library_catalog" Multiplicity="1" />
+          <End Role="List_of_authors" Type="Self.List_of_authors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Library_catalog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="List_of_authors">
+              <PropertyRef Name="Library_catalog_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Register_of_copies_Register_catalog">
+          <End Role="Library_catalog" Type="Self.Library_catalog" Multiplicity="1" />
+          <End Role="Register_of_copies" Type="Self.Register_of_copies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Library_catalog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Register_of_copies">
+              <PropertyRef Name="Library_catalog_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Register_of_copies_Registration_list">
+          <End Role="Registration_list" Type="Self.Registration_list" Multiplicity="0..1" />
+          <End Role="Register_of_copies" Type="Self.Register_of_copies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registration_list">
+              <PropertyRef Name="Library_card_number" />
+            </Principal>
+            <Dependent Role="Register_of_copies">
+              <PropertyRef Name="Last_reader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LibrarySystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authors" EntityType="Self.Authors" />
+          <EntitySet Name="Job_titles" EntityType="Self.Job_titles" />
+          <EntitySet Name="Library_catalog" EntityType="Self.Library_catalog" />
+          <EntitySet Name="List_of_authors" EntityType="Self.List_of_authors" />
+          <EntitySet Name="Register_of_copies" EntityType="Self.Register_of_copies" />
+          <EntitySet Name="Registration_list" EntityType="Self.Registration_list" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" />
+          <AssociationSet Name="FK_List_of_authors_ToAuthors" Association="Self.FK_List_of_authors_ToAuthors">
+            <End Role="Authors" EntitySet="Authors" />
+            <End Role="List_of_authors" EntitySet="List_of_authors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollment_Job_titles" Association="Self.FK_Enrollment_Job_titles">
+            <End Role="Job_titles" EntitySet="Job_titles" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Library_catalog_to_List_of_authors" Association="Self.FK_Library_catalog_to_List_of_authors">
+            <End Role="Library_catalog" EntitySet="Library_catalog" />
+            <End Role="List_of_authors" EntitySet="List_of_authors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Register_of_copies_Register_catalog" Association="Self.FK_Register_of_copies_Register_catalog">
+            <End Role="Library_catalog" EntitySet="Library_catalog" />
+            <End Role="Register_of_copies" EntitySet="Register_of_copies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Register_of_copies_Registration_list" Association="Self.FK_Register_of_copies_Registration_list">
+            <End Role="Registration_list" EntitySet="Registration_list" />
+            <End Role="Register_of_copies" EntitySet="Register_of_copies" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="LibrarySystemEntities">
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="Model.Authors">
+              <MappingFragment StoreEntitySet="Authors">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Job_titles">
+            <EntityTypeMapping TypeName="Model.Job_titles">
+              <MappingFragment StoreEntitySet="Job_titles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Library_catalog">
+            <EntityTypeMapping TypeName="Model.Library_catalog">
+              <MappingFragment StoreEntitySet="Library_catalog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Library_cipher" ColumnName="Library_cipher" />
+                <ScalarProperty Name="Year_of_publication" ColumnName="Year_of_publication" />
+                <ScalarProperty Name="Place_of_publication" ColumnName="Place_of_publication" />
+                <ScalarProperty Name="Publishing_house_name" ColumnName="Publishing_house_name" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Number_of_available" ColumnName="Number_of_available" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="List_of_authors">
+            <EntityTypeMapping TypeName="Model.List_of_authors">
+              <MappingFragment StoreEntitySet="List_of_authors">
+                <ScalarProperty Name="Library_catalog_Id" ColumnName="Library_catalog_Id" />
+                <ScalarProperty Name="Author_Id" ColumnName="Author_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Register_of_copies">
+            <EntityTypeMapping TypeName="Model.Register_of_copies">
+              <MappingFragment StoreEntitySet="Register_of_copies">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Issued_to" ColumnName="Issued_to" />
+                <ScalarProperty Name="When_issued" ColumnName="When_issued" />
+                <ScalarProperty Name="When_must_be_returned" ColumnName="When_must_be_returned" />
+                <ScalarProperty Name="Is_returned" ColumnName="Is_returned" />
+                <ScalarProperty Name="Last_reader" ColumnName="Last_reader" />
+                <ScalarProperty Name="Fine_paid" ColumnName="Fine_paid" />
+                <ScalarProperty Name="Library_catalog_Id" ColumnName="Library_catalog_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registration_list">
+            <EntityTypeMapping TypeName="Model.Registration_list">
+              <MappingFragment StoreEntitySet="Registration_list">
+                <ScalarProperty Name="Library_card_number" ColumnName="Library_card_number" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Card_issue_date" ColumnName="Card_issue_date" />
+                <ScalarProperty Name="Reregistration_date" ColumnName="Reregistration_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workers">
+            <EntityTypeMapping TypeName="Model.Workers">
+              <MappingFragment StoreEntitySet="Workers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Job_title_Id" ColumnName="Job_title_Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

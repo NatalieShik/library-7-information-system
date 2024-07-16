@@ -1,0 +1,57 @@
+﻿@model IEnumerable<WebApplicationLib.Models.Registration_list>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Список читателей</h2>
+
+<p>
+    @Html.ActionLink("Зарегистрировать нового", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Фамилия
+        </th>
+        <th>
+            Имя
+        </th>
+        <th>
+            Отчество
+        </th>
+        <th>
+            Дата выдачи карты
+        </th>
+        <th>
+            Дата перерегистрации
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patronymic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Card_issue_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reregistration_date)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.Library_card_number }) <br>
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Library_card_number })
+            </td>
+        </tr>
+    }
+
+</table>

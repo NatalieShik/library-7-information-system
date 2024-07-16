@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="LibrarySystemEntities">
+    <EntitySetMapping Name="Authors">
+      <EntityTypeMapping TypeName="Model.Authors">
+        <MappingFragment StoreEntitySet="Authors">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Job_titles">
+      <EntityTypeMapping TypeName="Model.Job_titles">
+        <MappingFragment StoreEntitySet="Job_titles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Library_catalog">
+      <EntityTypeMapping TypeName="Model.Library_catalog">
+        <MappingFragment StoreEntitySet="Library_catalog">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="Library_cipher" ColumnName="Library_cipher" />
+          <ScalarProperty Name="Year_of_publication" ColumnName="Year_of_publication" />
+          <ScalarProperty Name="Place_of_publication" ColumnName="Place_of_publication" />
+          <ScalarProperty Name="Publishing_house_name" ColumnName="Publishing_house_name" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Number_of_available" ColumnName="Number_of_available" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="List_of_authors">
+      <EntityTypeMapping TypeName="Model.List_of_authors">
+        <MappingFragment StoreEntitySet="List_of_authors">
+          <ScalarProperty Name="Library_catalog_Id" ColumnName="Library_catalog_Id" />
+          <ScalarProperty Name="Author_Id" ColumnName="Author_Id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Register_of_copies">
+      <EntityTypeMapping TypeName="Model.Register_of_copies">
+        <MappingFragment StoreEntitySet="Register_of_copies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Issued_to" ColumnName="Issued_to" />
+          <ScalarProperty Name="When_issued" ColumnName="When_issued" />
+          <ScalarProperty Name="When_must_be_returned" ColumnName="When_must_be_returned" />
+          <ScalarProperty Name="Is_returned" ColumnName="Is_returned" />
+          <ScalarProperty Name="Last_reader" ColumnName="Last_reader" />
+          <ScalarProperty Name="Fine_paid" ColumnName="Fine_paid" />
+          <ScalarProperty Name="Library_catalog_Id" ColumnName="Library_catalog_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Registration_list">
+      <EntityTypeMapping TypeName="Model.Registration_list">
+        <MappingFragment StoreEntitySet="Registration_list">
+          <ScalarProperty Name="Library_card_number" ColumnName="Library_card_number" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+          <ScalarProperty Name="Card_issue_date" ColumnName="Card_issue_date" />
+          <ScalarProperty Name="Reregistration_date" ColumnName="Reregistration_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Workers">
+      <EntityTypeMapping TypeName="Model.Workers">
+        <MappingFragment StoreEntitySet="Workers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+          <ScalarProperty Name="Job_title_Id" ColumnName="Job_title_Id" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

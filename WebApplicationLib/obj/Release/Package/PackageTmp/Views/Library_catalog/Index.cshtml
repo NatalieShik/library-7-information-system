@@ -1,0 +1,91 @@
+﻿@model IEnumerable<WebApplicationLib.Models.Library_catalog>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Каталог книг</h2>
+
+<p>
+    @Html.ActionLink("Создать новую запись", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Поиск по названию и издательству: @Html.TextBox("SearchString")
+        <input type="submit" value="Искать" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Название", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            Обложка книги
+        </th>
+        <th>
+            Библиотечный шифр
+        </th>
+        <th>
+            @Html.ActionLink("Год публикации", "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+        <th>
+            Место издательства
+        </th>
+        <th>
+            Издательство
+        </th>
+        <th>
+            Всего в библиотеке
+        </th>
+        <th>
+            В библиотеке сейчас
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @{ byte[] photo = item.Photo;
+                    string imageSrc = null;
+                    if (photo != null)
+                    {
+                        MemoryStream ms = new MemoryStream();
+                        ms.Write(photo, 0, photo.Length);
+                        string imageBase64 = Convert.ToBase64String(ms.ToArray());
+                        imageSrc = string.Format("data:image/jpg;base64,{0}", imageBase64);
+                        string base64String = Convert.ToBase64String(photo, 0, photo.Length);
+                    }
+                }
+                <img src="@imageSrc" alt="Image" width="200" height="300" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Library_cipher)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Year_of_publication)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place_of_publication)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publishing_house_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number_of_available)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) <br>
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WebApplicationLib.Models.Register_of_copies>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Реестр экземпляров</h2>
+
+<p>
+    @Html.ActionLink("Создать новую запись", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Кому отдана книга
+        </th>
+        <th>
+            Когда отдана
+        </th>
+        <th>
+            Когда должна быть возвращена
+        </th>
+        <th>
+            Возвращена ли
+        </th>
+        <th>
+            Оплачен ли штраф
+        </th>
+        <th>
+            Название книги
+        </th>
+        <th>
+            Предыдущий читатель
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Issued_to)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.When_issued)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.When_must_be_returned)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Is_returned)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fine_paid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Library_catalog.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Registration_list.Surname)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) <br>
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

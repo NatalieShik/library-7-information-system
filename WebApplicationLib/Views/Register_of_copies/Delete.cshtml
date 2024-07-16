@@ -1,0 +1,81 @@
+﻿@model WebApplicationLib.Models.Register_of_copies
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы уверены, что хотите удалить</h3>
+<div>
+    <h4>эту запись реестра экземпляров?</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Кому отдана книга
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Issued_to)
+        </dd>
+
+        <dt>
+            Когда отдана
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.When_issued)
+        </dd>
+
+        <dt>
+            Когда должна быть возвращена
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.When_must_be_returned)
+        </dd>
+
+        <dt>
+            Возвращена ли
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Is_returned)
+        </dd>
+
+        <dt>
+            Оплачен ли штраф
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fine_paid)
+        </dd>
+
+        <dt>
+            Название книги
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Library_catalog.Title)
+        </dd>
+
+        <dt>
+            Предыдущий читатель
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Registration_list.Surname)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к списку", "Index")
+        </div>
+    }
+</div>

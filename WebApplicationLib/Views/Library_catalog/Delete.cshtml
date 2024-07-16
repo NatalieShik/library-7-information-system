@@ -1,0 +1,99 @@
+﻿@model WebApplicationLib.Models.Library_catalog
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы уверены, что хотите удалить книгу</h3>
+<div>
+    <h4>из библиотечного каталога?</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Название
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            Обложка книги
+        </dt>
+
+        <dd>
+            @{ byte[] photo = Model.Photo;
+                string imageSrc = null;
+                if (photo != null)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    ms.Write(photo, 0, photo.Length);
+                    string imageBase64 = Convert.ToBase64String(ms.ToArray());
+                    imageSrc = string.Format("data:image/jpg;base64,{0}", imageBase64);
+                    string base64String = Convert.ToBase64String(photo, 0, photo.Length);
+                }
+            }
+            <img src="@imageSrc" alt="Image" width="200" height="300" />
+        </dd>
+
+        <dt>
+            Библиотечный шифр
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Library_cipher)
+        </dd>
+
+        <dt>
+            Год публикации
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year_of_publication)
+        </dd>
+
+        <dt>
+            Место издательства
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Place_of_publication)
+        </dd>
+
+        <dt>
+            Издательство
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Publishing_house_name)
+        </dd>
+
+        <dt>
+            Всего в библиотеке
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            В библиотеке сейчас
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Number_of_available)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к списку", "Index")
+        </div>
+    }
+</div>
